@@ -90,7 +90,7 @@ input {
 }
 @media (max-width: 600px) {
   .wrap {
-    padding: 0 var(--s-5);
+    padding: 0 var(--s-4);
   }
 }
 
@@ -167,7 +167,8 @@ input {
   flex-wrap: wrap;
   align-items: flex-end;
   gap: var(--s-6) var(--s-8);
-  padding: var(--s-4) 0;
+  padding-top: var(--s-4);
+  padding-bottom: var(--s-4);
 }
 .field-label {
   display: block;
@@ -1076,7 +1077,8 @@ pre.raw {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: var(--s-8);
-  padding: var(--s-10) 0 var(--s-12);
+  padding-top: var(--s-10);
+  padding-bottom: var(--s-12);
 }
 .site-footer strong {
   color: var(--ink);
