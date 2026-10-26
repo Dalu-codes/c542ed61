@@ -2,8 +2,8 @@
 
 ForeCheck shows a GB electricity procurement team **which national wind forecast they actually had at their day-ahead decision time**, and **how far that forecast turned out to be from what was generated**, for the 31 decisions made in January 2026.
 
-- **Live app:** `TODO: add the Vercel URL after deploying`
-- **Video (unlisted, ≤ 10 min):** `TODO: add the YouTube link after uploading`
+- **Live app:** `https://c542ed61.vercel.app/`
+- **Video (unlisted, ≤ 10 min):** `Thttps://youtu.be/XKsvRREjzMU`
 - **Data:** Elexon Insights API: [FUELHH](https://bmrs.elexon.co.uk/api-documentation/endpoint/datasets/FUELHH/stream) (actuals, `fuelType=WIND`) and [WINDFOR](https://bmrs.elexon.co.uk/api-documentation/endpoint/datasets/WINDFOR/stream) (forecast runs). No other data sources.
 
 ## The problem
@@ -17,20 +17,20 @@ ForeCheck does **not** compute how much power to buy. That needs the utility's d
 
 ## What's in the app
 
-| View | What it answers |
-| --- | --- |
-| **January review** (`/`) | Month verdict; MAE, RMSE, bias (split into constant vs varying), P90, coverage; a calendar of the 31 decisions; an error heat map by day × hour; accuracy by gate; the largest misses |
+| View                                    | What it answers                                                                                                                                                                              |
+| --------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **January review** (`/`)                | Month verdict; MAE, RMSE, bias (split into constant vs varying), P90, coverage; a calendar of the 31 decisions; an error heat map by day × hour; accuracy by gate; the largest misses        |
 | **Decision replay** (`/day/2026-01-14`) | For one delivery day: the run used and how old it was at the gate, the forecast vs actual chart with the signed gap, runs published after the gate, error by hour, and an hour-by-hour table |
-| **Hour audit** (any "Audit" button) | Every run that forecast that hour, which one was used, why later runs were excluded, and the raw Elexon records |
-| **Method & limits** (`/method`) | Rules, metric definitions, the data audit, and known limitations, with figures computed live from the snapshot |
+| **Hour audit** (any "Audit" button)     | Every run that forecast that hour, which one was used, why later runs were excluded, and the raw Elexon records                                                                              |
+| **Method & limits** (`/method`)         | Rules, metric definitions, the data audit, and known limitations, with figures computed live from the snapshot                                                                               |
 
 The gate (`09:20` EPEX hourly, `09:50` N2EX, `15:30` EPEX half-hourly) is a URL parameter (`?gate=0950`), so any view can be shared.
 
 ### January 2026 results (09:20 gate, 744 delivery hours)
 
-| MAE | RMSE | Mean error (bias) | P90 \|error\| | Over-forecast hours |
-| --- | --- | --- | --- | --- |
-| 2,022 MW | 2,497 MW | +1,746 MW | 4,154 MW | 630 of 744 |
+| MAE      | RMSE     | Mean error (bias) | P90 \|error\| | Over-forecast hours |
+| -------- | -------- | ----------------- | ------------- | ------------------- |
+| 2,022 MW | 2,497 MW | +1,746 MW         | 4,154 MW      | 630 of 744          |
 
 A constant over-forecast accounts for 49% of the squared error. Even values a run gives for hours that had **already started** when it was published sit about 1,548 MW above the metered actual. So part of the "error" is a gap between what WINDFOR forecasts and what FUELHH meters (curtailment or coverage are plausible causes), not only forecasting skill. Full figures: [`docs/data-audit.md`](docs/data-audit.md).
 
@@ -120,7 +120,7 @@ docker compose run --rm tests             # run the test suite in a container
 
 ```bash
 node scripts/smoke.mjs http://localhost:8080
-node scripts/smoke.mjs https://<your-app>.vercel.app
+node scripts/smoke.mjs https://c542ed61.vercel.app/
 ```
 
 ### Refresh the data
@@ -133,13 +133,13 @@ python -m app.audit                                  # regenerate docs/data-audi
 
 ## Configuration
 
-| Variable | Default | Purpose |
-| --- | --- | --- |
-| `FORECHECK_DATA_DIR` | `data/snapshot` | Snapshot folder the API loads |
-| `FORECHECK_CORS_ORIGINS` | *(none)* | Comma-separated origins, only if the frontend is on a different domain |
-| `FORECHECK_STALE_RUN_HOURS` | `6` | Flag a run as old at the gate above this age |
-| `VITE_API_BASE` | *(empty = same origin)* | Frontend build: API base URL if hosted separately |
-| `VITE_API_PROXY` | `http://localhost:8000` | Dev server proxy target |
+| Variable                    | Default                 | Purpose                                                                |
+| --------------------------- | ----------------------- | ---------------------------------------------------------------------- |
+| `FORECHECK_DATA_DIR`        | `data/snapshot`         | Snapshot folder the API loads                                          |
+| `FORECHECK_CORS_ORIGINS`    | _(none)_                | Comma-separated origins, only if the frontend is on a different domain |
+| `FORECHECK_STALE_RUN_HOURS` | `6`                     | Flag a run as old at the gate above this age                           |
+| `VITE_API_BASE`             | _(empty = same origin)_ | Frontend build: API base URL if hosted separately                      |
+| `VITE_API_PROXY`            | `http://localhost:8000` | Dev server proxy target                                                |
 
 ## Deploy (Vercel)
 
@@ -147,7 +147,7 @@ One Vercel project serves the static React build and the FastAPI app as a Python
 
 1. Push this repo to a **public GitHub repository with an anonymous name** (e.g. `openssl rand -hex 4`).
 2. On vercel.com: **Add New → Project → Import** the repo. Leave settings as they are: `vercel.json` sets the install, build and output commands, the Python function, and the routes.
-3. After it deploys, run `node scripts/smoke.mjs https://<your-app>.vercel.app` and open the site. Change the gate and confirm the numbers change.
+3. After it deploys, run `node scripts/smoke.mjs https://c542ed61.vercel.app/` and open the site. Change the gate and confirm the numbers change.
 
 **If the combined deploy misbehaves** (untested alternative): host the API separately, for example the Docker image from `backend/Dockerfile`, which already contains `data/snapshot`, with `FORECHECK_CORS_ORIGINS` set to the frontend URL. Then deploy `frontend/` as a Vite project with `VITE_API_BASE` pointing at that API. A Vercel project rooted at `backend/` alone would not include `data/snapshot` and would return 503.
 
@@ -180,5 +180,6 @@ This project was built with **Claude (Anthropic), in Claude Cowork**, used as a 
 - the data investigation and audit scripts;
 - code for the backend, tests, frontend, Docker and Vercel configuration;
 - wireframes, documentation and presentation scripts.
+- editing the demo video (cuts, title cards, labels, audio levelling) and generating its captions.
 
 All key product and method decisions (gate default, evaluation period, how to present the bias gap, publish-time handling, palette and typography) were made by the developer, and every reported figure is computed from the committed snapshot by code in this repository.
