@@ -1,0 +1,2 @@
+# Python dependencies for the Vercel function (api/index.py). Local dev uses backend/requirements*.txt.
+fastapi>=0.115,<1

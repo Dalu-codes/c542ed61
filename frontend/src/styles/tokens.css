@@ -1,0 +1,73 @@
+/*
+ * ForeCheck design tokens.
+ * Palette (provided): Black #000000 · Prussian Blue #14213d · Orange #fca311 ·
+ * Alabaster Grey #e5e5e5 · White #ffffff.
+ * Derived values are tints of Prussian Blue only (no new hues), chosen for
+ * WCAG 2.2 AA. Contrast on white unless stated:
+ *   navy 16.0:1 · ink-2 (#5b6477) 5.9:1 · line-strong (#8a909e) 3.2:1 (UI boundaries)
+ *   orange 2.0:1 on white -> never text or thin lines on white; 7.9:1 on navy.
+ *   black on orange 10.4:1 (badges, selected states).
+ */
+:root {
+  --black: #000000;
+  --navy: #14213d;
+  --orange: #fca311;
+  --alabaster: #e5e5e5;
+  --white: #ffffff;
+
+  /* text */
+  --ink: #14213d;
+  --ink-2: #5b6477;
+  --ink-on-navy: #ffffff;
+  --ink-on-navy-2: #c9ced8; /* 10.3:1 on navy */
+
+  /* surfaces */
+  --bg: #ffffff;
+  --surface: #ffffff;
+  --surface-sunk: #f4f4f4; /* alabaster at 40% */
+  --surface-navy: #14213d;
+  --surface-navy-2: #1c2c4f;
+
+  /* lines */
+  --line: #e5e5e5; /* decorative dividers only */
+  --line-strong: #8a909e; /* input + control boundaries, 3.2:1 */
+  --grid-on-navy: rgba(255, 255, 255, 0.12);
+
+  /* data roles */
+  --data-forecast: #fca311; /* on navy */
+  --data-actual: #ffffff; /* on navy */
+  --data-over: #fca311; /* forecast above actual */
+  --data-under: #14213d; /* forecast below actual (on light) */
+  --data-neutral: #e5e5e5;
+
+  --focus: #14213d;
+  --focus-halo: #fca311;
+
+  /* type */
+  --font-sans: "Poppins", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --fs-xs: 0.75rem;
+  --fs-sm: 0.8125rem;
+  --fs-md: 0.9375rem;
+  --fs-lg: 1.125rem;
+  --fs-xl: 1.5rem;
+  --fs-2xl: 2rem;
+  --fs-3xl: 2.625rem;
+
+  /* space (4px grid) */
+  --s-1: 4px;
+  --s-2: 8px;
+  --s-3: 12px;
+  --s-4: 16px;
+  --s-5: 20px;
+  --s-6: 24px;
+  --s-8: 32px;
+  --s-10: 40px;
+  --s-12: 48px;
+  --s-16: 64px;
+
+  --radius: 12px;
+  --radius-sm: 8px;
+  --shadow: 0 1px 2px rgba(20, 33, 61, 0.06), 0 4px 16px rgba(20, 33, 61, 0.06);
+  --content: 1240px;
+}
