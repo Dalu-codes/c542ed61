@@ -90,7 +90,7 @@ input {
 }
 @media (max-width: 600px) {
   .wrap {
-    padding: 0 var(--s-4);
+    padding: 0 var(--s-5);
   }
 }
 
